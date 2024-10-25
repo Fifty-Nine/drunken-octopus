@@ -738,10 +738,16 @@ volatile bool Temperature::raw_temps_ready = false;
     #else
       #define B_TERN(T,A,B) (B)
     #endif
-    #define GHV(C,B,H) C_TERN(ischamber, C, B_TERN(isbed, B, H))
-    #define SHV(V) C_TERN(ischamber, temp_chamber.soft_pwm_amount = V, B_TERN(isbed, temp_bed.soft_pwm_amount = V, temp_hotend[heater_id].soft_pwm_amount = V))
-    #define ONHEATINGSTART() C_TERN(ischamber, printerEventLEDs.onChamberHeatingStart(), B_TERN(isbed, printerEventLEDs.onBedHeatingStart(), printerEventLEDs.onHotendHeatingStart()))
-    #define ONHEATING(S,C,T) C_TERN(ischamber, printerEventLEDs.onChamberHeating(S,C,T), B_TERN(isbed, printerEventLEDs.onBedHeating(S,C,T), printerEventLEDs.onHotendHeating(S,C,T)))
+    #if ENABLED(PIDTEMP)
+      #define H_TERN(H, X) H
+    #else
+      #define H_TERN(H, X) X
+    #endif
+    #define GHVX(C,B,H,X) C_TERN(ischamber, C, B_TERN(isbed, B, H_TERN(H, X)))
+    #define GHV(C,B,H) GHVX(C, B, H, 0)
+    #define SHV(V) C_TERN(ischamber, temp_chamber.soft_pwm_amount = V, B_TERN(isbed, temp_bed.soft_pwm_amount = V, H_TERN(temp_hotend[heater_id].soft_pwm_amount = V, 0)))
+    #define ONHEATINGSTART() C_TERN(ischamber, printerEventLEDs.onChamberHeatingStart(), B_TERN(isbed, printerEventLEDs.onBedHeatingStart(), H_TERN(printerEventLEDs.onHotendHeatingStart(),)))
+    #define ONHEATING(S,C,T) C_TERN(ischamber, printerEventLEDs.onChamberHeating(S,C,T), B_TERN(isbed, printerEventLEDs.onBedHeating(S,C,T), H_TERN(printerEventLEDs.onHotendHeating(S,C,T),)))
 
     #define WATCH_PID DISABLED(NO_WATCH_PID_TUNING) && (ALL(WATCH_CHAMBER, PIDTEMPCHAMBER) || ALL(WATCH_BED, PIDTEMPBED) || ALL(WATCH_HOTENDS, PIDTEMP))
 
@@ -756,7 +762,12 @@ volatile bool Temperature::raw_temps_ready = false;
       #else
         #define B_GTV(T,A,B) (B)
       #endif
-      #define GTV(C,B,H) C_GTV(ischamber, C, B_GTV(isbed, B, H))
+      #if ALL(THERMAL_PROTECTION_HOTEND, PIDTEMP)
+        #define H_GTV(H) H
+      #else
+        #define H_GTV(H) 0
+      #endif
+      #define GTV(C,B,H) C_GTV(ischamber, C, B_GTV(isbed, B, H_GTV(H)))
       const uint16_t watch_temp_period = GTV(WATCH_CHAMBER_TEMP_PERIOD, WATCH_BED_TEMP_PERIOD, WATCH_TEMP_PERIOD);
       const uint8_t watch_temp_increase = GTV(WATCH_CHAMBER_TEMP_INCREASE, WATCH_BED_TEMP_INCREASE, WATCH_TEMP_INCREASE);
       const celsius_float_t watch_temp_target = celsius_float_t(target - (watch_temp_increase + GTV(TEMP_CHAMBER_HYSTERESIS, TEMP_BED_HYSTERESIS, TEMP_HYSTERESIS) + 1));
@@ -948,7 +959,7 @@ volatile bool Temperature::raw_temps_ready = false;
 
         // Use the result? (As with "M303 U1")
         if (set_result)
-          GHV(_set_chamber_pid(tune_pid), _set_bed_pid(tune_pid), _set_hotend_pid(heater_id, tune_pid));
+          GHVX(_set_chamber_pid(tune_pid), _set_bed_pid(tune_pid), _set_hotend_pid(heater_id, tune_pid), (void)0);
 
         goto EXIT_M303;
       }
