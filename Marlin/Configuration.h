@@ -858,7 +858,7 @@
   #define PID_FUNCTIONAL_RANGE 10 // If the temperature difference between the target temperature and the actual temperature
                                   // is more than PID_FUNCTIONAL_RANGE then the PID will be shut off and the heater will be set to min/max.
 
-  #define PID_EDIT_MENU         // <-- changed: Add PID editing to the "Advanced Settings" menu. (~700 bytes of flash)
+  //#define PID_EDIT_MENU         // Add PID editing to the "Advanced Settings" menu. (~700 bytes of flash)
   #define PID_AUTOTUNE_MENU     // <-- changed: Add PID auto-tuning to the "Advanced Settings" menu. (~250 bytes of flash)
 #endif
 
@@ -1190,7 +1190,7 @@
 #define X_MAX_ENDSTOP_HIT_STATE HIGH
 #define Y_MIN_ENDSTOP_HIT_STATE HIGH
 #define Y_MAX_ENDSTOP_HIT_STATE HIGH
-#define Z_MIN_ENDSTOP_HIT_STATE LOW // <-- changed
+#define Z_MIN_ENDSTOP_HIT_STATE HIGH
 #define Z_MAX_ENDSTOP_HIT_STATE HIGH
 #define I_MIN_ENDSTOP_HIT_STATE HIGH
 #define I_MAX_ENDSTOP_HIT_STATE HIGH
@@ -1204,7 +1204,7 @@
 #define V_MAX_ENDSTOP_HIT_STATE HIGH
 #define W_MIN_ENDSTOP_HIT_STATE HIGH
 #define W_MAX_ENDSTOP_HIT_STATE HIGH
-#define Z_MIN_PROBE_ENDSTOP_HIT_STATE LOW // <-- changed
+#define Z_MIN_PROBE_ENDSTOP_HIT_STATE HIGH
 
 // Enable this feature if all enabled endstop pins are interrupt-capable.
 // This will remove the need to poll the interrupt pins, saving many CPU cycles.
@@ -1362,7 +1362,7 @@
  * The probe replaces the Z-MIN endstop and is used for Z homing.
  * (Automatically enables USE_PROBE_FOR_Z_HOMING.)
  */
-//#define Z_MIN_PROBE_USES_Z_MIN_ENDSTOP_PIN // <-- changed
+#define Z_MIN_PROBE_USES_Z_MIN_ENDSTOP_PIN
 
 // Force the use of the probe for Z-axis homing
 //#define USE_PROBE_FOR_Z_HOMING
@@ -1380,7 +1380,7 @@
  *    - Normally-closed (NC) also connect to GND.
  *    - Normally-open (NO) also connect to 5V.
  */
-#define Z_MIN_PROBE_PIN SERVO0_PIN // <-- changed
+//#define Z_MIN_PROBE_PIN -1
 
 /**
  * Probe Type
@@ -1406,14 +1406,14 @@
  * Use the nozzle as the probe, as with a conductive
  * nozzle system or a piezo-electric smart effector.
  */
-#define NOZZLE_AS_PROBE // <-- changed
+//#define NOZZLE_AS_PROBE
 
 /**
  * Z Servo Probe, such as an endstop switch on a rotating arm.
  */
 //#define Z_PROBE_SERVO_NR 0
 #ifdef Z_PROBE_SERVO_NR
-  //#define Z_SERVO_ANGLES { 70, 0 }      // Z Servo Deploy and Stow angles
+  #define Z_SERVO_ANGLES {10,90}      // <-- changed: Z Servo Deploy and Stow angles
   //#define Z_SERVO_MEASURE_ANGLE 45      // Use if the servo must move to a "free" position for measuring after deploy
   //#define Z_SERVO_INTERMEDIATE_STOW     // Stow the probe between points
   //#define Z_SERVO_DEACTIVATE_AFTER_STOW // Deactivate the servo when probe is stowed
@@ -1422,7 +1422,7 @@
 /**
  * The BLTouch probe uses a Hall effect sensor and emulates a servo.
  */
-//#define BLTOUCH
+#define BLTOUCH // <-- changed
 
 /**
  * MagLev V4 probe by MDD
@@ -1598,7 +1598,7 @@
  *     |    [-]    |
  *     O-- FRONT --+
  */
-#define NOZZLE_TO_PROBE_OFFSET {0,0,-0.4} // <-- changed
+#define NOZZLE_TO_PROBE_OFFSET {0,-22,-2.35} // <-- changed
 
 // Enable and set to use a specific tool for probing. Disable to allow any tool.
 #define PROBING_TOOL 0
@@ -1608,16 +1608,16 @@
 
 // Most probes should stay away from the edges of the bed, but
 // with NOZZLE_AS_PROBE this can be negative for a wider probing area.
-//#define PROBING_MARGIN 10 // <-- changed
+#define PROBING_MARGIN 15 // <-- changed
 
 // X and Y axis travel speed (mm/min) between probes
-#define XY_PROBE_FEEDRATE 6000 // <-- changed
+#define XY_PROBE_FEEDRATE 18000 // <-- changed
 
 // Feedrate (mm/min) for the first approach when double-probing (MULTIPLE_PROBING == 2)
-#define Z_PROBE_FEEDRATE_FAST 480 // <-- changed
+#define Z_PROBE_FEEDRATE_FAST (4*60)
 
 // Feedrate (mm/min) for the "accurate" probe of each point
-#define Z_PROBE_FEEDRATE_SLOW 60 // <-- changed
+#define Z_PROBE_FEEDRATE_SLOW 300 // <-- changed
 
 /**
  * Probe Activation Switch
@@ -1665,7 +1665,7 @@
  * A total of 2 does fast/slow probes with a weighted average.
  * A total of 3 or more adds more slow probes, taking the average.
  */
-#define MULTIPLE_PROBING 2 // <-- changed
+//#define MULTIPLE_PROBING 2
 //#define EXTRA_PROBING    1
 
 /**
@@ -1682,10 +1682,10 @@
  * Example: 'M851 Z-5' with a CLEARANCE of 4  =>  9mm from bed to nozzle.
  *     But: 'M851 Z+1' with a CLEARANCE of 2  =>  2mm from bed to nozzle.
  */
-#define Z_CLEARANCE_DEPLOY_PROBE   5 // <-- changed: (mm) Z Clearance for Deploy/Stow
+#define Z_CLEARANCE_DEPLOY_PROBE   15 // <-- changed: (mm) Z Clearance for Deploy/Stow
 #define Z_CLEARANCE_BETWEEN_PROBES  5 // (mm) Z Clearance between probe points
 #define Z_CLEARANCE_MULTI_PROBE     5 // (mm) Z Clearance between multiple probes
-#define Z_PROBE_ERROR_TOLERANCE     5 // <-- changed: (mm) Tolerance for early trigger (<= -probe.offset.z + ZPET)
+#define Z_PROBE_ERROR_TOLERANCE     3 // (mm) Tolerance for early trigger (<= -probe.offset.z + ZPET)
 //#define Z_AFTER_PROBING           5 // (mm) Z position after probing is done
 
 #define Z_PROBE_LOW_POINT          -2 // (mm) Farthest distance below the trigger-point to go before stopping
@@ -1695,8 +1695,8 @@
 //#define PROBE_OFFSET_XMAX  50   // (mm)
 //#define PROBE_OFFSET_YMIN -50   // (mm)
 //#define PROBE_OFFSET_YMAX  50   // (mm)
-#define PROBE_OFFSET_ZMIN -2   // <-- changed: (mm)
-#define PROBE_OFFSET_ZMAX  5   // <-- changed: (mm)
+//#define PROBE_OFFSET_ZMIN -20   // (mm)
+//#define PROBE_OFFSET_ZMAX  20   // (mm)
 
 // Enable the M48 repeatability test to test probe accuracy
 #define Z_MIN_PROBE_REPEATABILITY_TEST // <-- changed
@@ -1721,7 +1721,7 @@
 #endif
 #define PROBING_FANS_OFF          // <-- changed: Turn fans off when probing
 //#define PROBING_ESTEPPERS_OFF     // Turn all extruder steppers off when probing
-#define PROBING_STEPPERS_OFF      // <-- changed: Turn all steppers off (unless needed to hold position) when probing (including extruders)
+//#define PROBING_STEPPERS_OFF      // Turn all steppers off (unless needed to hold position) when probing (including extruders)
 //#define DELAY_BEFORE_PROBING 200  // (ms) To prevent vibrations from triggering piezo sensors
 
 // Require minimum nozzle and/or bed temperature for probing
@@ -2063,8 +2063,8 @@
  */
 //#define AUTO_BED_LEVELING_3POINT
 //#define AUTO_BED_LEVELING_LINEAR
-#define AUTO_BED_LEVELING_BILINEAR // <-- changed
-//#define AUTO_BED_LEVELING_UBL
+//#define AUTO_BED_LEVELING_BILINEAR
+#define AUTO_BED_LEVELING_UBL // <-- changed
 //#define MESH_BED_LEVELING
 
 /**
@@ -2130,7 +2130,7 @@
   /**
    * Enable the G26 Mesh Validation Pattern tool.
    */
-  #define G26_MESH_VALIDATION // <-- changed
+  //#define G26_MESH_VALIDATION
   #if ENABLED(G26_MESH_VALIDATION)
     #define MESH_TEST_NOZZLE_SIZE    0.4  // (mm) Diameter of primary nozzle.
     #define MESH_TEST_LAYER_HEIGHT   0.2  // (mm) Default layer height for G26.
@@ -2146,8 +2146,8 @@
 #if ANY(AUTO_BED_LEVELING_LINEAR, AUTO_BED_LEVELING_BILINEAR)
 
   // Set the number of grid points per dimension.
-  #define GRID_MAX_POINTS_X 2 // <-- changed
-  #define GRID_MAX_POINTS_Y 2 // <-- changed
+  #define GRID_MAX_POINTS_X 5 // <-- changed
+  #define GRID_MAX_POINTS_Y 5 // <-- changed
 
   // Probe along the Y axis, advancing X after each column
   //#define PROBE_Y_FIRST
@@ -2178,11 +2178,11 @@
 
   //#define MESH_EDIT_GFX_OVERLAY   // Display a graphics overlay while editing the mesh
 
-  #define MESH_INSET 1              // Set Mesh bounds as an inset region of the bed
-  #define GRID_MAX_POINTS_X 2      // <-- changed: Don't use more than 15 points per axis, implementation limited.
-  #define GRID_MAX_POINTS_Y 2 // <-- changed
+  #define MESH_INSET 15              // <-- changed: Set Mesh bounds as an inset region of the bed
+  #define GRID_MAX_POINTS_X 5      // <-- changed: Don't use more than 15 points per axis, implementation limited.
+  #define GRID_MAX_POINTS_Y 5 // <-- changed
 
-  //#define UBL_HILBERT_CURVE       // Use Hilbert distribution for less travel when probing multiple points
+  #define UBL_HILBERT_CURVE       // <-- changed: Use Hilbert distribution for less travel when probing multiple points
 
   //#define UBL_TILT_ON_MESH_POINTS         // Use nearest mesh points with G29 J for better Z reference
   //#define UBL_TILT_ON_MESH_POINTS_3POINT  // Use nearest mesh points with G29 J0 (3-point)
@@ -2220,9 +2220,9 @@
   //=================================== Mesh ==================================
   //===========================================================================
 
-  #define MESH_INSET 10          // Set Mesh bounds as an inset region of the bed
-  #define GRID_MAX_POINTS_X 2    // <-- changed: Don't use more than 7 points per axis, implementation limited.
-  #define GRID_MAX_POINTS_Y 2 // <-- changed
+  #define MESH_INSET 15          // <-- changed: Set Mesh bounds as an inset region of the bed
+  #define GRID_MAX_POINTS_X 5    // <-- changed: Don't use more than 7 points per axis, implementation limited.
+  #define GRID_MAX_POINTS_Y 5 // <-- changed
 
   //#define MESH_G28_REST_ORIGIN // After homing all axes ('G28' or 'G28 XYZ') rest Z at Z_MIN_POS
 
@@ -2284,7 +2284,7 @@
 // For DELTA this is the top-center of the Cartesian print volume.
 //#define MANUAL_X_HOME_POS 0
 //#define MANUAL_Y_HOME_POS 0
-#define MANUAL_Z_HOME_POS 5.5 // <-- changed
+//#define MANUAL_Z_HOME_POS 0
 //#define MANUAL_I_HOME_POS 0
 //#define MANUAL_J_HOME_POS 0
 //#define MANUAL_K_HOME_POS 0
@@ -2302,8 +2302,8 @@
 #define Z_SAFE_HOMING // <-- changed
 
 #if ENABLED(Z_SAFE_HOMING)
-  #define Z_SAFE_HOMING_X_POINT -26  // <-- changed: (mm) X point for Z homing
-  #define Z_SAFE_HOMING_Y_POINT 258  // <-- changed: (mm) Y point for Z homing
+  #define Z_SAFE_HOMING_X_POINT X_CENTER  // (mm) X point for Z homing
+  #define Z_SAFE_HOMING_Y_POINT Y_CENTER  // (mm) Y point for Z homing
   //#define Z_SAFE_HOMING_POINT_ABSOLUTE  // Ignore home offsets (M206) for Z homing position
 #endif
 
@@ -2526,7 +2526,7 @@
   #endif
 
   // Move the nozzle to the initial position after cleaning
-  //#define NOZZLE_CLEAN_GOBACK // <-- changed
+  #define NOZZLE_CLEAN_GOBACK
 
   // For a purge/clean station that's always at the gantry height (thus no Z move)
   //#define NOZZLE_CLEAN_NO_Z
@@ -2539,7 +2539,7 @@
   //#define NOZZLE_CLEAN_HEATUP       // Heat up the nozzle instead of skipping wipe
 
   // Explicit wipe G-code script applies to a G12 with no arguments.
-  #define WIPE_SEQUENCE_COMMANDS "M117 Hot end heating...\nM104 S170 T0\nM104 S170 T1\nG28 O1\nM117 Wiping nozzle\nT0\nG1 X-26 Y25 Z10 F4000\nM109 R170 T0\nM109 R170 T1\nG1 Z1\nM114\nG1 X-26 Y25\nG1 X-26 Y95\nG1 X-26 Y25\nG1 X-26 Y95\nG1 X-26 Y25\nG1 X-26 Y95\nG1 X-26 Y25\nG1 X-26 Y95\nG1 X-26 Y25\nG1 X-26 Y95\nG1 X-26 Y25\nG1 X-26 Y95\nG1 Z15\nM400\nM106 S255\nG0 X-10 Y-9\nM109 R160 T0\nM109 R160 T1\nM107" // <-- changed
+  #define WIPE_SEQUENCE_COMMANDS "M117 Hot end heating...\nM104 S170 T0\nM104 S170 T1\nG28 O1\nM117 Wiping nozzle\nT0\nG1 X-26 Y25 Z10 F4000\nM109 R170 T0\nM109 R170 T1\nG1 Z1\nM114\nG1 X-26 Y25\nG1 X-26 Y95\nG1 X-26 Y25\nG1 X-26 Y95\nG1 X-26 Y25\nG1 X-26 Y95\nG1 X-26 Y25\nG1 X-26 Y95\nG1 X-26 Y25\nG1 X-26 Y95\nG1 X-26 Y25\nG1 X-26 Y95\nG1 Z15\nM400\nM106 S255\nM109 R160 T0\nM109 R160 T1\nM107" // <-- changed
 
 #endif
 
@@ -3633,7 +3633,7 @@
  * Set this manually if there are extra servos needing manual control.
  * Set to 0 to turn off servo support.
  */
-#define NUM_SERVOS 0 // <-- changed: Note: Servo index starts with 0 for M280-M282 commands
+#define NUM_SERVOS 1 // <-- changed: Note: Servo index starts with 0 for M280-M282 commands
 
 // (ms) Delay before the next move will start, to give the servo time to reach its target angle.
 // 300ms is a good value but you can try less delay.
@@ -3657,14 +3657,14 @@
 //#define M16_MACHINE_NAME
 #define TOOLHEAD_NAME "Dual Extruder 3" // <-- changed
 #define TOOLHEAD_TYPE "DualExtruder v3" // <-- changed
-#define WIPE_SEQUENCE_COMMANDS "M117 Hot end heating...\nM104 S170 T0\nM104 S170 T1\nG28 O1\nM117 Wiping nozzle\nT0\nG1 X-26 Y25 Z10 F4000\nM109 R170 T0\nM109 R170 T1\nG1 Z1\nM114\nG1 X-26 Y25\nG1 X-26 Y95\nG1 X-26 Y25\nG1 X-26 Y95\nG1 X-26 Y25\nG1 X-26 Y95\nG1 X-26 Y25\nG1 X-26 Y95\nG1 X-26 Y25\nG1 X-26 Y95\nG1 X-26 Y25\nG1 X-26 Y95\nG1 Z15\nM400\nM106 S255\nG0 X-10 Y-9\nM109 R160 T0\nM109 R160 T1\nM107" // <-- changed
+#define WIPE_SEQUENCE_COMMANDS "M117 Hot end heating...\nM104 S170 T0\nM104 S170 T1\nG28 O1\nM117 Wiping nozzle\nT0\nG1 X-26 Y25 Z10 F4000\nM109 R170 T0\nM109 R170 T1\nG1 Z1\nM114\nG1 X-26 Y25\nG1 X-26 Y95\nG1 X-26 Y25\nG1 X-26 Y95\nG1 X-26 Y25\nG1 X-26 Y95\nG1 X-26 Y25\nG1 X-26 Y95\nG1 X-26 Y25\nG1 X-26 Y95\nG1 X-26 Y25\nG1 X-26 Y95\nG1 Z15\nM400\nM106 S255\nM109 R160 T0\nM109 R160 T1\nM107" // <-- changed
 //#define AXIS_LEVELING_COMMANDS
-//#define BED_LEVELING_COMMANDS
+#define BED_LEVELING_COMMANDS "G28\nG29 P1 X0 Y0\nG29 S1" // <-- changed
 //#define MANUAL_BED_LEVELING_COMMANDS
 //#define AO_EXP1_DEPRECATED_PINMAP
 //#define DISABLE_DUE_SD_MMC
 //#define ARCHIM2_SPI_FLASH_EEPROM_BACKUP_SIZE
-#define END_G29_ON_BACK_LEFT_CORNER // <-- changed
+//#define END_G29_ON_BACK_LEFT_CORNER
 #define G26_IN_START_GCODE_WORKAROUND // <-- changed
 //#define USB_DEVICE_VENDOR_ID
 //#define USB_DEVICE_PRODUCT_ID
@@ -3677,7 +3677,7 @@
 //#define TOUCH_UI_FILAMENT_RUNOUT_WORKAROUNDS
 #define CURA_LE_RUNOUT_HANDLING_WORKAROUND // <-- changed
 //#define FIL_RUNOUT_PIN
-//#define SERVO0_PIN
+#define SERVO0_PIN 24 // <-- changed, motor header MX3
 //#define FAN0_PIN
 //#define FAN1_PIN
 #define ACTION_ON_FILAMENT_RUNOUT "pause: filament_runout" // <-- changed
@@ -3692,7 +3692,7 @@
 //#define Z2_PRESENCE_CHECK
 //#define USE_ELECTROMAGNETIC_BRAKE
 //#define ELECTROMAGNETIC_BRAKE_PIN
-//#define UBL_HILBERT_CURVE
+#define UBL_HILBERT_CURVE // <-- changed
 //#define M997_ARCHIM_BOOTLOADER
 //#define START_PRINT_TIMER_ON_G26
 //#define MOVE_TO_Z_MIN_COMMANDS
