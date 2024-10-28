@@ -1413,7 +1413,7 @@
  */
 //#define Z_PROBE_SERVO_NR 0
 #ifdef Z_PROBE_SERVO_NR
-  #define Z_SERVO_ANGLES {10,90}      // <-- changed: Z Servo Deploy and Stow angles
+  //#define Z_SERVO_ANGLES { 70, 0 }      // Z Servo Deploy and Stow angles
   //#define Z_SERVO_MEASURE_ANGLE 45      // Use if the servo must move to a "free" position for measuring after deploy
   //#define Z_SERVO_INTERMEDIATE_STOW     // Stow the probe between points
   //#define Z_SERVO_DEACTIVATE_AFTER_STOW // Deactivate the servo when probe is stowed
@@ -1598,7 +1598,7 @@
  *     |    [-]    |
  *     O-- FRONT --+
  */
-#define NOZZLE_TO_PROBE_OFFSET {0,-22,-2.35} // <-- changed
+#define NOZZLE_TO_PROBE_OFFSET {6.5,-32,-3.85} // <-- change
 
 // Enable and set to use a specific tool for probing. Disable to allow any tool.
 #define PROBING_TOOL 0
@@ -2063,8 +2063,8 @@
  */
 //#define AUTO_BED_LEVELING_3POINT
 //#define AUTO_BED_LEVELING_LINEAR
-//#define AUTO_BED_LEVELING_BILINEAR
-#define AUTO_BED_LEVELING_UBL // <-- changed
+#define AUTO_BED_LEVELING_BILINEAR
+//#define AUTO_BED_LEVELING_UBL // <-- changed
 //#define MESH_BED_LEVELING
 
 /**
@@ -2178,9 +2178,9 @@
 
   //#define MESH_EDIT_GFX_OVERLAY   // Display a graphics overlay while editing the mesh
 
-  #define MESH_INSET 15              // <-- changed: Set Mesh bounds as an inset region of the bed
-  #define GRID_MAX_POINTS_X 5      // <-- changed: Don't use more than 15 points per axis, implementation limited.
-  #define GRID_MAX_POINTS_Y 5 // <-- changed
+  #define MESH_INSET 1              // Set Mesh bounds as an inset region of the bed
+  #define GRID_MAX_POINTS_X 3      // <-- changed: Don't use more than 15 points per axis, implementation limited.
+  #define GRID_MAX_POINTS_Y 3 // <-- changed
 
   #define UBL_HILBERT_CURVE       // <-- changed: Use Hilbert distribution for less travel when probing multiple points
 
@@ -2387,8 +2387,8 @@
  *   M502 - Revert settings to "factory" defaults. (Follow with M500 to init the EEPROM.)
  */
 #define EEPROM_SETTINGS     // <-- changed: Persistent storage with M500 and M501
-//#define DISABLE_M503        // Saves ~2700 bytes of flash. Disable for release!
-#define EEPROM_CHITCHAT       // Give feedback on EEPROM commands. Disable to save flash.
+#define DISABLE_M503        // Saves ~2700 bytes of flash. Disable for release!
+//#define EEPROM_CHITCHAT       // Give feedback on EEPROM commands. Disable to save flash.
 #define EEPROM_BOOT_SILENT    // Keep M503 quiet and only give errors during first load
 #if ENABLED(EEPROM_SETTINGS)
   #define EEPROM_AUTO_INIT  // <-- changed: Init EEPROM automatically on any errors.
@@ -2631,7 +2631,7 @@
  * SD Card support is disabled by default. If your controller has an SD slot,
  * you must uncomment the following option or it won't work.
  */
-#define SDSUPPORT // <-- changed
+//#define SDSUPPORT // <-- changed
 
 /**
  * SD CARD: ENABLE CRC
@@ -3677,7 +3677,7 @@
 //#define TOUCH_UI_FILAMENT_RUNOUT_WORKAROUNDS
 #define CURA_LE_RUNOUT_HANDLING_WORKAROUND // <-- changed
 //#define FIL_RUNOUT_PIN
-#define SERVO0_PIN 24 // <-- changed, motor header MX3
+#define SERVO0_PIN 46 // <-- changed, motor header MX3, pin 5
 //#define FAN0_PIN
 //#define FAN1_PIN
 #define ACTION_ON_FILAMENT_RUNOUT "pause: filament_runout" // <-- changed
@@ -3692,7 +3692,7 @@
 //#define Z2_PRESENCE_CHECK
 //#define USE_ELECTROMAGNETIC_BRAKE
 //#define ELECTROMAGNETIC_BRAKE_PIN
-#define UBL_HILBERT_CURVE // <-- changed
+//#define UBL_HILBERT_CURVE
 //#define M997_ARCHIM_BOOTLOADER
 //#define START_PRINT_TIMER_ON_G26
 //#define MOVE_TO_Z_MIN_COMMANDS
