@@ -2539,7 +2539,29 @@
   //#define NOZZLE_CLEAN_HEATUP       // Heat up the nozzle instead of skipping wipe
 
   // Explicit wipe G-code script applies to a G12 with no arguments.
-  #define WIPE_SEQUENCE_COMMANDS "M117 Hot end heating...\nM104 S170 T0\nM104 S170 T1\nG28 O1\nM117 Wiping nozzle\nT0\nG1 X-26 Y25 Z10 F4000\nM109 R170 T0\nM109 R170 T1\nG1 Z1\nM114\nG1 X-26 Y25\nG1 X-26 Y95\nG1 X-26 Y25\nG1 X-26 Y95\nG1 X-26 Y25\nG1 X-26 Y95\nG1 X-26 Y25\nG1 X-26 Y95\nG1 X-26 Y25\nG1 X-26 Y95\nG1 X-26 Y25\nG1 X-26 Y95\nG1 Z15\nM400\nM106 S255\nM109 R160 T0\nM109 R160 T1\nM107" // <-- changed
+  #define WIPE_SEQUENCE_COMMANDS \
+    "G28 O1\n" \
+    "M117 Wiping nozzle\n" \
+    "T0\n"\
+    "G1 X-26 Y25 Z10 F4000\n" \
+    "G1 Z1\n" \
+    "M114\n" \
+    "G1 X-26 Y25\n" \
+    "G1 X-26 Y95\n" \
+    "G1 X-26 Y25\n" \
+    "G1 X-26 Y95\n" \
+    "G1 X-26 Y25\n" \
+    "G1 X-26 Y95\n" \
+    "G1 X-26 Y25\n" \
+    "G1 X-26 Y95\n" \
+    "G1 X-26 Y25\n" \
+    "G1 X-26 Y95\n" \
+    "G1 X-26 Y25\n" \
+    "G1 X-26 Y95\n" \
+    "G1 Z15\n" \
+    "M400\n" \
+    "M106 S255\n" \
+    "M107\n" // <-- changed
 
 #endif
 
@@ -3657,7 +3679,6 @@
 //#define M16_MACHINE_NAME
 #define TOOLHEAD_NAME "Dual Extruder 3" // <-- changed
 #define TOOLHEAD_TYPE "DualExtruder v3" // <-- changed
-#define WIPE_SEQUENCE_COMMANDS "M117 Hot end heating...\nM104 S170 T0\nM104 S170 T1\nG28 O1\nM117 Wiping nozzle\nT0\nG1 X-26 Y25 Z10 F4000\nM109 R170 T0\nM109 R170 T1\nG1 Z1\nM114\nG1 X-26 Y25\nG1 X-26 Y95\nG1 X-26 Y25\nG1 X-26 Y95\nG1 X-26 Y25\nG1 X-26 Y95\nG1 X-26 Y25\nG1 X-26 Y95\nG1 X-26 Y25\nG1 X-26 Y95\nG1 X-26 Y25\nG1 X-26 Y95\nG1 Z15\nM400\nM106 S255\nM109 R160 T0\nM109 R160 T1\nM107" // <-- changed
 //#define AXIS_LEVELING_COMMANDS
 #define BED_LEVELING_COMMANDS "G28\nG29 P1 X0 Y0\nG29 S1" // <-- changed
 //#define MANUAL_BED_LEVELING_COMMANDS
