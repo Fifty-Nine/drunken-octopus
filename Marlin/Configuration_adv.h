@@ -1248,7 +1248,7 @@
 #define DEFAULT_STEPPER_TIMEOUT_SEC 600 // <-- changed
 #define DISABLE_IDLE_X
 #define DISABLE_IDLE_Y
-#define DISABLE_IDLE_Z    true// <-- changed: Disable if the nozzle could fall onto your printed part!
+#define DISABLE_IDLE_Z    false// <-- changed: Disable if the nozzle could fall onto your printed part!
 //#define DISABLE_IDLE_I
 //#define DISABLE_IDLE_J
 //#define DISABLE_IDLE_K
